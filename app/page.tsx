@@ -212,21 +212,21 @@ export default function CarreraMasterform() {
             </div>
 
             {/* SECCIÓN DERECHA: GOOGLE MAPS INTERACTIVO */}
-            <div className="flex-1 relative h-48 sm:h-64 md:h-auto bg-[#1A0F0D] overflow-hidden border-t-4 md:border-t-0 border-[#3E2723]">
-              <div className="absolute top-2 left-2 md:top-4 md:left-4 z-20 bg-[#F5E8D3] text-[#3E2723] px-2 py-1 md:px-4 md:py-2 font-black uppercase tracking-widest text-[10px] md:text-xs border-2 md:border-4 border-[#3E2723] shadow-[2px_2px_0px_0px_rgba(62,39,35,1)] pointer-events-none">
-                RUTA OFICIAL - 3KM
-              </div>
-              
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m56!1m12!1m3!1d8669.407081497284!2d-115.0014890404043!3d32.567421751558854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m41!3e2!4m5!1s0x80d7ab56caac1bcb%3A0x6beaf3e36ffd0dbe!2sPunto%20Fit%20Gym%2C%20Av%20mexico%20s%2Fn%2C%20Pob%2C%20Benito%20Ju%C3%A1rez%2C%2021900%20Benito%20Ju%C3%A1rez%2C%20B.C.!3m2!1d32.563155099999996!2d-114.9945485!4m3!3m2!1d32.5697846!2d-114.9990775!4m3!3m2!1d32.5691708!2d-114.9971758!4m3!3m2!1d32.5673136!2d-114.9958171!4m3!3m2!1d32.566692599999996!2d-114.9953716!4m3!3m2!1d32.5661266!2d-114.9949652!4m3!3m2!1d32.564562699999996!2d-114.9938165!4m3!3m2!1d32.5652776!2d-114.994382!4m5!1s0x80d7ab56caac1bcb%3A0x6beaf3e36ffd0dbe!2sPunto%20Fit%20Gym%2C%20Av%20mexico%20s%2Fn%2C%20Pob%2C%20Benito%20Ju%C3%A1rez%2C%2021900%20Benito%20Ju%C3%A1rez%2C%20B.C.!3m2!1d32.563155099999996!2d-114.9945485!5e1!3m2!1ses!2smx!4v1790122956480!5m2!1ses!2smx"                  
-                className="w-full h-full border-0 absolute inset-0 z-10" 
-                allowFullScreen={false} 
-                loading="lazy" 
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
-              
-              <div className="absolute inset-0 shadow-[inset_0_0_20px_rgba(26,15,13,0.8)] md:shadow-[inset_0_0_40px_rgba(26,15,13,0.8)] pointer-events-none z-20"></div>
+            <div className="mt-8 md:mt-12 relative h-64 sm:h-72 w-full bg-[#1A0F0D] border-4 border-[#3E2723] shadow-[8px_8px_0px_0px_rgba(62,39,35,1)]">
+            <div className="absolute top-2 left-2 z-20 bg-[#F5E8D3] text-[#3E2723] px-3 py-1 font-black uppercase tracking-widest text-[10px] md:text-xs border-2 border-[#3E2723] pointer-events-none">
+              RUTA OFICIAL - 3KM
             </div>
+            
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m56!1m12!1m3!1d8669.407081497284!2d-115.0014890404043!3d32.567421751558854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m41!3e2!4m5!1s0x80d7ab56caac1bcb%3A0x6beaf3e36ffd0dbe!2sPunto%20Fit%20Gym%2C%20Av%20mexico%20s%2Fn%2C%20Pob%2C%20Benito%20Ju%C3%A1rez%2C%2021900%20Benito%20Ju%C3%A1rez%2C%20B.C.!3m2!1d32.563155099999996!2d-114.9945485!4m3!3m2!1d32.5697846!2d-114.9990775!4m3!3m2!1d32.5691708!2d-114.9971758!4m3!3m2!1d32.5673136!2d-114.9958171!4m3!3m2!1d32.566692599999996!2d-114.9953716!4m3!3m2!1d32.5661266!2d-114.9949652!4m3!3m2!1d32.564562699999996!2d-114.9938165!4m3!3m2!1d32.5652776!2d-114.994382!4m5!1s0x80d7ab56caac1bcb%3A0x6beaf3e36ffd0dbe!2sPunto%20Fit%20Gym%2C%20Av%20mexico%20s%2Fn%2C%20Pob%2C%20Benito%20Ju%C3%A1rez%2C%2021900%20Benito%20Ju%C3%A1rez%2C%20B.C.!3m2!1d32.563155099999996!2d-114.9945485!5e1!3m2!1ses!2smx!4v1790122956480!5m2!1ses!2smx"                  
+              className="w-full h-full border-0 absolute inset-0 z-10" 
+              allowFullScreen={false} 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+            
+            <div className="absolute inset-0 shadow-[inset_0_0_20px_rgba(26,15,13,0.8)] pointer-events-none z-20"></div>
+          </div>
           </div>
         </div>
       )}
