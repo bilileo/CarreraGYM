@@ -20,6 +20,35 @@ export default function CarreraMasterform() {
   const [searchEdad, setSearchEdad] = useState(''); 
   const [searchError, setSearchError] = useState('');
 
+  // ==========================================
+  // ESTADOS PARA EL ANUNCIO INICIAL (WELCOME MODAL)
+  // ==========================================
+  const [showWelcome, setShowWelcome] = useState(true);
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    // ESTABLECE AQUÍ LA FECHA Y HORA EXACTA DE LA CARRERA
+    const targetDate = new Date('2026-10-10T08:00:00').getTime();
+
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance > 0) {
+        setTimeLeft({
+          days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((distance % (1000 * 60)) / 1000)
+        });
+      } else {
+        clearInterval(interval);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     async function loadEventos() {
       const { data } = await supabase.from('eventos').select('*').order('fecha', { ascending: true });
@@ -127,6 +156,81 @@ export default function CarreraMasterform() {
       
       <div className="fixed inset-0 opacity-40 pointer-events-none z-0" style={{ backgroundImage: 'radial-gradient(#8B4513 0.5px, transparent 0.5px)', backgroundSize: '12px 12px' }}></div>
 
+      {/* ==========================================
+          MODAL DE BIENVENIDA / ANUNCIO INICIAL (Optimizada para Móvil)
+          ========================================== */}
+      {showWelcome && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#3E2723]/95 backdrop-blur-md animate-fade-in overflow-y-auto">
+          
+          <div className="w-full max-w-5xl bg-[#F5E8D3] border-[6px] md:border-[12px] border-[#8B4513] shadow-[8px_8px_0px_0px_#1A0F0D] md:shadow-[16px_16px_0px_0px_#1A0F0D] flex flex-col md:flex-row relative overflow-hidden my-auto">
+            
+            <div className="absolute top-2 left-2 w-4 h-4 border-t-4 border-l-4 border-[#3E2723] z-20 pointer-events-none"></div>
+            <div className="absolute top-2 right-2 w-4 h-4 border-t-4 border-r-4 border-[#3E2723] z-20 pointer-events-none"></div>
+            <div className="absolute bottom-2 left-2 w-4 h-4 border-b-4 border-l-4 border-[#3E2723] z-20 pointer-events-none"></div>
+            <div className="absolute bottom-2 right-2 w-4 h-4 border-b-4 border-r-4 border-[#3E2723] z-20 pointer-events-none"></div>
+
+            {/* SECCIÓN IZQUIERDA: CONTADOR Y TEXTO */}
+            <div className="flex-1 p-4 sm:p-6 md:p-12 flex flex-col justify-center items-center text-center border-b-4 md:border-b-0 md:border-r-8 border-[#3E2723] z-10 bg-[#F5E8D3]">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tighter text-[#3E2723] leading-none mb-2" style={{ textShadow: '2px 2px 0px #C7A985' }}>
+                COWBOY RUN
+              </h2>
+              <p className="text-[#8B4513] font-black uppercase tracking-widest text-[10px] sm:text-xs md:text-sm mb-4 md:mb-6 border-b-2 border-[#8B4513] pb-2 inline-block">
+                Ven a correr 1 y 3km con banda en vivo 🤠🔥
+              </p>
+              
+              <div className="w-full bg-[#DFCAAA] border-4 border-[#3E2723] p-3 sm:p-4 md:p-6 mb-6 md:mb-8 shadow-[4px_4px_0px_0px_rgba(62,39,35,1)]">
+                <p className="text-[10px] md:text-xs font-bold text-[#5D4037] uppercase tracking-widest mb-2 md:mb-3">Tiempo para el disparo de salida</p>
+                <div className="flex justify-center gap-2 sm:gap-4 md:gap-6">
+                  <div className="flex flex-col items-center">
+                    <span className="text-2xl sm:text-3xl md:text-5xl font-black text-[#3E2723]">{timeLeft.days.toString().padStart(2, '0')}</span>
+                    <span className="text-[8px] sm:text-[10px] font-bold text-[#8B4513] uppercase">Días</span>
+                  </div>
+                  <span className="text-2xl sm:text-3xl md:text-5xl font-black text-[#8B4513]">:</span>
+                  <div className="flex flex-col items-center">
+                    <span className="text-2xl sm:text-3xl md:text-5xl font-black text-[#3E2723]">{timeLeft.hours.toString().padStart(2, '0')}</span>
+                    <span className="text-[8px] sm:text-[10px] font-bold text-[#8B4513] uppercase">Horas</span>
+                  </div>
+                  <span className="text-2xl sm:text-3xl md:text-5xl font-black text-[#8B4513]">:</span>
+                  <div className="flex flex-col items-center">
+                    <span className="text-2xl sm:text-3xl md:text-5xl font-black text-[#3E2723]">{timeLeft.minutes.toString().padStart(2, '0')}</span>
+                    <span className="text-[8px] sm:text-[10px] font-bold text-[#8B4513] uppercase">Min</span>
+                  </div>
+                  <span className="text-2xl sm:text-3xl md:text-5xl font-black text-[#8B4513]">:</span>
+                  <div className="flex flex-col items-center">
+                    <span className="text-2xl sm:text-3xl md:text-5xl font-black text-[#3E2723]">{timeLeft.seconds.toString().padStart(2, '0')}</span>
+                    <span className="text-[8px] sm:text-[10px] font-bold text-[#8B4513] uppercase">Seg</span>
+                  </div>
+                </div>
+              </div>
+
+              <button 
+                onClick={() => setShowWelcome(false)}
+                className="w-full bg-[#3E2723] text-[#EAD7B8] py-3 sm:py-4 md:py-5 font-black uppercase tracking-widest hover:bg-[#8B4513] transition-colors border-4 border-[#3E2723] shadow-[4px_4px_0px_0px_rgba(139,69,19,0.3)] hover:shadow-none hover:translate-y-1 hover:translate-x-1 duration-200 text-xs sm:text-sm md:text-base"
+              >
+                Ingresar al Registro »
+              </button>
+            </div>
+
+            {/* SECCIÓN DERECHA: GOOGLE MAPS INTERACTIVO */}
+            <div className="flex-1 relative h-48 sm:h-64 md:h-auto bg-[#1A0F0D] overflow-hidden border-t-4 md:border-t-0 border-[#3E2723]">
+              <div className="absolute top-2 left-2 md:top-4 md:left-4 z-20 bg-[#F5E8D3] text-[#3E2723] px-2 py-1 md:px-4 md:py-2 font-black uppercase tracking-widest text-[10px] md:text-xs border-2 md:border-4 border-[#3E2723] shadow-[2px_2px_0px_0px_rgba(62,39,35,1)] pointer-events-none">
+                RUTA OFICIAL - 3KM
+              </div>
+              
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m56!1m12!1m3!1d8669.407081497284!2d-115.0014890404043!3d32.567421751558854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m41!3e2!4m5!1s0x80d7ab56caac1bcb%3A0x6beaf3e36ffd0dbe!2sPunto%20Fit%20Gym%2C%20Av%20mexico%20s%2Fn%2C%20Pob%2C%20Benito%20Ju%C3%A1rez%2C%2021900%20Benito%20Ju%C3%A1rez%2C%20B.C.!3m2!1d32.563155099999996!2d-114.9945485!4m3!3m2!1d32.5697846!2d-114.9990775!4m3!3m2!1d32.5691708!2d-114.9971758!4m3!3m2!1d32.5673136!2d-114.9958171!4m3!3m2!1d32.566692599999996!2d-114.9953716!4m3!3m2!1d32.5661266!2d-114.9949652!4m3!3m2!1d32.564562699999996!2d-114.9938165!4m3!3m2!1d32.5652776!2d-114.994382!4m5!1s0x80d7ab56caac1bcb%3A0x6beaf3e36ffd0dbe!2sPunto%20Fit%20Gym%2C%20Av%20mexico%20s%2Fn%2C%20Pob%2C%20Benito%20Ju%C3%A1rez%2C%2021900%20Benito%20Ju%C3%A1rez%2C%20B.C.!3m2!1d32.563155099999996!2d-114.9945485!5e1!3m2!1ses!2smx!4v1790122956480!5m2!1ses!2smx"                  
+                className="w-full h-full border-0 absolute inset-0 z-10" 
+                allowFullScreen={false} 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+              
+              <div className="absolute inset-0 shadow-[inset_0_0_20px_rgba(26,15,13,0.8)] md:shadow-[inset_0_0_40px_rgba(26,15,13,0.8)] pointer-events-none z-20"></div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="absolute top-6 left-4 md:top-8 md:left-8 z-50">
         <img 
           src="/logo.png" 
@@ -156,7 +260,11 @@ export default function CarreraMasterform() {
             <h2 className="text-xl md:text-2xl font-black uppercase tracking-widest border-b-2 border-[#8B4513] inline-block pb-1">Próximos Desafíos</h2>
             <div className="grid gap-2 md:gap-3 mt-2">
               {eventos.map((ev) => (
-                <div key={ev.id} className="group flex items-center justify-between p-3 md:p-4 bg-[#DFCAAA] border-2 border-[#3E2723] rounded-none hover:bg-[#3E2723] hover:text-[#EAD7B8] transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(62,39,35,1)]">
+                <div 
+                  key={ev.id} 
+                  onClick={() => setShowWelcome(true)} 
+                  className="group flex items-center justify-between p-3 md:p-4 bg-[#DFCAAA] border-2 border-[#3E2723] rounded-none hover:bg-[#3E2723] hover:text-[#EAD7B8] transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(62,39,35,1)] cursor-pointer" // <-- AQUI SE AGREGO CURSOR-POINTER
+                >
                   <div>
                     <p className="font-black uppercase text-sm md:text-base">{ev.titulo}</p>
                     <p className="text-[11px] md:text-xs font-bold opacity-80">{new Date(ev.fecha).toLocaleDateString()}</p>
@@ -284,6 +392,12 @@ export default function CarreraMasterform() {
           )}
         </div>
       </div>
+
+      <footer className="relative z-10 w-full text-center mt-16 pb-6 border-t-2 border-[#8B4513]/20 pt-6 max-w-6xl mx-auto px-4">
+        <p className="text-xs md:text-sm font-black uppercase tracking-widest text-[#8B4513]">
+          Made by <a href="https://github.com/bilileo" target="_blank" rel="noopener noreferrer" className="text-[#3E2723] hover:text-[#8B4513] transition-colors underline decoration-2 underline-offset-4 cursor-pointer">bili © 2026</a>
+        </p>
+      </footer>
 
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#3E2723]/90 backdrop-blur-sm">
