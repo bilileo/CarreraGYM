@@ -6,6 +6,9 @@ import { supabase } from '../src/lib/supabase';
 
 export default function CarreraMasterform() {
   const router = useRouter();
+
+  // 👇 INTERRUPTOR DE REGISTROS: Cambia a "true" para abrir o "false" para cerrar
+  const INSCRIPCIONES_ABIERTAS = false;
   
   const [formData, setFormData] = useState({ id: '', nombre: '', correo: '', categoria: '', edad: '' });
   const [eventos, setEventos] = useState<any[]>([]);
@@ -28,7 +31,7 @@ export default function CarreraMasterform() {
 
   useEffect(() => {
     // ESTABLECE AQUÍ LA FECHA Y HORA EXACTA DE LA CARRERA
-    const targetDate = new Date('2026-10-10T08:00:00').getTime();
+    const targetDate = new Date('2026-10-24T08:00:00').getTime();
 
     const interval = setInterval(() => {
       const now = new Date().getTime();
@@ -157,80 +160,77 @@ export default function CarreraMasterform() {
       <div className="fixed inset-0 opacity-40 pointer-events-none z-0" style={{ backgroundImage: 'radial-gradient(#8B4513 0.5px, transparent 0.5px)', backgroundSize: '12px 12px' }}></div>
 
       {/* ==========================================
-          MODAL DE BIENVENIDA / ANUNCIO INICIAL (Optimizada para Móvil)
+          MODAL DE BIENVENIDA / ANUNCIO INICIAL
           ========================================== */}
       {showWelcome && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#3E2723]/95 backdrop-blur-md animate-fade-in overflow-y-auto">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-[#3E2723]/95 backdrop-blur-md animate-fade-in overflow-y-auto">
           
-          <div className="w-full max-w-5xl bg-[#F5E8D3] border-[6px] md:border-[12px] border-[#8B4513] shadow-[8px_8px_0px_0px_#1A0F0D] md:shadow-[16px_16px_0px_0px_#1A0F0D] flex flex-col md:flex-row relative overflow-hidden my-auto">
+          <div className="w-full max-w-5xl bg-[#F5E8D3] border-[6px] md:border-[12px] border-[#8B4513] shadow-[8px_8px_0px_0px_#1A0F0D] md:shadow-[16px_16px_0px_0px_#1A0F0D] flex flex-col md:flex-row relative my-auto">
             
-            <div className="absolute top-2 left-2 w-4 h-4 border-t-4 border-l-4 border-[#3E2723] z-20 pointer-events-none"></div>
-            <div className="absolute top-2 right-2 w-4 h-4 border-t-4 border-r-4 border-[#3E2723] z-20 pointer-events-none"></div>
-            <div className="absolute bottom-2 left-2 w-4 h-4 border-b-4 border-l-4 border-[#3E2723] z-20 pointer-events-none"></div>
-            <div className="absolute bottom-2 right-2 w-4 h-4 border-b-4 border-r-4 border-[#3E2723] z-20 pointer-events-none"></div>
+            <div className="absolute top-2 left-2 w-4 h-4 border-t-4 border-l-4 border-[#3E2723] z-30 pointer-events-none"></div>
+            <div className="absolute top-2 right-2 w-4 h-4 border-t-4 border-r-4 border-[#3E2723] z-30 pointer-events-none"></div>
+            <div className="absolute bottom-2 left-2 w-4 h-4 border-b-4 border-l-4 border-[#3E2723] z-30 pointer-events-none"></div>
+            <div className="absolute bottom-2 right-2 w-4 h-4 border-b-4 border-r-4 border-[#3E2723] z-30 pointer-events-none"></div>
 
             {/* SECCIÓN IZQUIERDA: CONTADOR Y TEXTO */}
-            <div className="flex-1 p-4 sm:p-6 md:p-12 flex flex-col justify-center items-center text-center border-b-4 md:border-b-0 md:border-r-8 border-[#3E2723] z-10 bg-[#F5E8D3]">
-              <h2 className="text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tighter text-[#3E2723] leading-none mb-2" style={{ textShadow: '2px 2px 0px #C7A985' }}>
+            <div className="w-full md:w-1/2 p-6 sm:p-8 md:p-12 flex flex-col justify-center items-center text-center border-b-4 md:border-b-0 md:border-r-8 border-[#3E2723] z-10 bg-[#F5E8D3]">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter text-[#3E2723] leading-none mb-2" style={{ textShadow: '2px 2px 0px #C7A985' }}>
                 COWBOY RUN
               </h2>
-              <p className="text-[#8B4513] font-black uppercase tracking-widest text-[10px] sm:text-xs md:text-sm mb-4 md:mb-6 border-b-2 border-[#8B4513] pb-2 inline-block">
-                Ven a correr 1 y 3km con banda en vivo 🤠🔥
+              <p className="text-[#8B4513] font-black uppercase tracking-widest text-[10px] sm:text-xs md:text-sm mb-6 border-b-2 border-[#8B4513] pb-2 inline-block">
+                Ven a correr 1 y 3KM con banda en vivo 🤠🔥
               </p>
               
-              <div className="w-full bg-[#DFCAAA] border-4 border-[#3E2723] p-3 sm:p-4 md:p-6 mb-6 md:mb-8 shadow-[4px_4px_0px_0px_rgba(62,39,35,1)]">
-                <p className="text-[10px] md:text-xs font-bold text-[#5D4037] uppercase tracking-widest mb-2 md:mb-3">Tiempo para el disparo de salida</p>
-                <div className="flex justify-center gap-2 sm:gap-4 md:gap-6">
+              <div className="w-full bg-[#DFCAAA] border-4 border-[#3E2723] p-4 sm:p-5 md:p-6 mb-8 shadow-[4px_4px_0px_0px_rgba(62,39,35,1)]">
+                <p className="text-[10px] md:text-xs font-bold text-[#5D4037] uppercase tracking-widest mb-3 md:mb-4">Tiempo para el disparo de salida</p>
+                <div className="flex justify-center gap-3 sm:gap-4 md:gap-5 lg:gap-6">
                   <div className="flex flex-col items-center">
-                    <span className="text-2xl sm:text-3xl md:text-5xl font-black text-[#3E2723]">{timeLeft.days.toString().padStart(2, '0')}</span>
-                    <span className="text-[8px] sm:text-[10px] font-bold text-[#8B4513] uppercase">Días</span>
+                    <span className="text-3xl sm:text-4xl md:text-5xl font-black text-[#3E2723]">{timeLeft.days.toString().padStart(2, '0')}</span>
+                    <span className="text-[9px] sm:text-[10px] font-bold text-[#8B4513] uppercase mt-1">Días</span>
                   </div>
-                  <span className="text-2xl sm:text-3xl md:text-5xl font-black text-[#8B4513]">:</span>
+                  <span className="text-3xl sm:text-4xl md:text-5xl font-black text-[#8B4513]">:</span>
                   <div className="flex flex-col items-center">
-                    <span className="text-2xl sm:text-3xl md:text-5xl font-black text-[#3E2723]">{timeLeft.hours.toString().padStart(2, '0')}</span>
-                    <span className="text-[8px] sm:text-[10px] font-bold text-[#8B4513] uppercase">Horas</span>
+                    <span className="text-3xl sm:text-4xl md:text-5xl font-black text-[#3E2723]">{timeLeft.hours.toString().padStart(2, '0')}</span>
+                    <span className="text-[9px] sm:text-[10px] font-bold text-[#8B4513] uppercase mt-1">Horas</span>
                   </div>
-                  <span className="text-2xl sm:text-3xl md:text-5xl font-black text-[#8B4513]">:</span>
+                  <span className="text-3xl sm:text-4xl md:text-5xl font-black text-[#8B4513]">:</span>
                   <div className="flex flex-col items-center">
-                    <span className="text-2xl sm:text-3xl md:text-5xl font-black text-[#3E2723]">{timeLeft.minutes.toString().padStart(2, '0')}</span>
-                    <span className="text-[8px] sm:text-[10px] font-bold text-[#8B4513] uppercase">Min</span>
+                    <span className="text-3xl sm:text-4xl md:text-5xl font-black text-[#3E2723]">{timeLeft.minutes.toString().padStart(2, '0')}</span>
+                    <span className="text-[9px] sm:text-[10px] font-bold text-[#8B4513] uppercase mt-1">Min</span>
                   </div>
-                  <span className="text-2xl sm:text-3xl md:text-5xl font-black text-[#8B4513]">:</span>
+                  <span className="text-3xl sm:text-4xl md:text-5xl font-black text-[#8B4513]">:</span>
                   <div className="flex flex-col items-center">
-                    <span className="text-2xl sm:text-3xl md:text-5xl font-black text-[#3E2723]">{timeLeft.seconds.toString().padStart(2, '0')}</span>
-                    <span className="text-[8px] sm:text-[10px] font-bold text-[#8B4513] uppercase">Seg</span>
+                    <span className="text-3xl sm:text-4xl md:text-5xl font-black text-[#3E2723]">{timeLeft.seconds.toString().padStart(2, '0')}</span>
+                    <span className="text-[9px] sm:text-[10px] font-bold text-[#8B4513] uppercase mt-1">Seg</span>
                   </div>
                 </div>
               </div>
 
               <button 
                 onClick={() => setShowWelcome(false)}
-                className="w-full bg-[#3E2723] text-[#EAD7B8] py-3 sm:py-4 md:py-5 font-black uppercase tracking-widest hover:bg-[#8B4513] transition-colors border-4 border-[#3E2723] shadow-[4px_4px_0px_0px_rgba(139,69,19,0.3)] hover:shadow-none hover:translate-y-1 hover:translate-x-1 duration-200 text-xs sm:text-sm md:text-base"
+                className="w-full bg-[#3E2723] text-[#EAD7B8] py-4 sm:py-5 font-black uppercase tracking-widest hover:bg-[#8B4513] transition-colors border-4 border-[#3E2723] shadow-[4px_4px_0px_0px_rgba(139,69,19,0.3)] hover:shadow-none hover:translate-y-1 hover:translate-x-1 duration-200 text-xs sm:text-sm md:text-base"
               >
                 Ingresar al Registro »
               </button>
             </div>
 
             {/* SECCIÓN DERECHA: GOOGLE MAPS INTERACTIVO */}
-            <div className="mt-8 md:mt-12 relative h-64 sm:h-72 w-full bg-[#1A0F0D] border-4 border-[#3E2723] shadow-[8px_8px_0px_0px_rgba(62,39,35,1)]">
-            <div className="absolute top-2 left-2 z-20 bg-[#F5E8D3] text-[#3E2723] px-3 py-1 font-black uppercase tracking-widest text-[10px] md:text-xs border-2 border-[#3E2723] pointer-events-none">
-              RUTA OFICIAL - 3KM
+            <div className="w-full md:w-1/2 relative min-h-[250px] sm:min-h-[300px] md:min-h-[auto] bg-[#1A0F0D] flex flex-col z-10">
+              <div className="absolute top-4 left-4 z-20 bg-[#F5E8D3] text-[#3E2723] px-3 py-2 font-black uppercase tracking-widest text-[10px] md:text-xs border-2 md:border-4 border-[#3E2723] shadow-[2px_2px_0px_0px_rgba(62,39,35,1)] pointer-events-none">
+                RUTA OFICIAL - 3KM
+              </div>
+              
+              <iframe                src="https://www.google.com/maps/embed?pb=!1m56!1m12!1m3!1d8669.407081497284!2d-115.0014890404043!3d32.567421751558854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m41!3e2!4m5!1s0x80d7ab56caac1bcb%3A0x6beaf3e36ffd0dbe!2sPunto%20Fit%20Gym%2C%20Av%20mexico%20s%2Fn%2C%20Pob%2C%20Benito%20Ju%C3%A1rez%2C%2021900%20Benito%20Ju%C3%A1rez%2C%20B.C.!3m2!1d32.563155099999996!2d-114.9945485!4m3!3m2!1d32.5697846!2d-114.9990775!4m3!3m2!1d32.5691708!2d-114.9971758!4m3!3m2!1d32.5673136!2d-114.9958171!4m3!3m2!1d32.566692599999996!2d-114.9953716!4m3!3m2!1d32.5661266!2d-114.9949652!4m3!3m2!1d32.564562699999996!2d-114.9938165!4m3!3m2!1d32.5652776!2d-114.994382!4m5!1s0x80d7ab56caac1bcb%3A0x6beaf3e36ffd0dbe!2sPunto%20Fit%20Gym%2C%20Av%20mexico%20s%2Fn%2C%20Pob%2C%20Benito%20Ju%C3%A1rez%2C%2021900%20Benito%20Ju%C3%A1rez%2C%20B.C.!3m2!1d32.563155099999996!2d-114.9945485!5e1!3m2!1ses!2smx!4v1790122956480!5m2!1ses!2smx"                                 className="w-full h-full border-0 absolute inset-0 z-10"                allowFullScreen={false}                loading="lazy"                referrerPolicy="no-referrer-when-downgrade"             ></iframe>
+              
+              <div className="absolute inset-0 shadow-[inset_0_0_30px_rgba(26,15,13,0.6)] pointer-events-none z-10"></div>
             </div>
-            
-            <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m56!1m12!1m3!1d8669.407081497284!2d-115.0014890404043!3d32.567421751558854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m41!3e2!4m5!1s0x80d7ab56caac1bcb%3A0x6beaf3e36ffd0dbe!2sPunto%20Fit%20Gym%2C%20Av%20mexico%20s%2Fn%2C%20Pob%2C%20Benito%20Ju%C3%A1rez%2C%2021900%20Benito%20Ju%C3%A1rez%2C%20B.C.!3m2!1d32.563155099999996!2d-114.9945485!4m3!3m2!1d32.5697846!2d-114.9990775!4m3!3m2!1d32.5691708!2d-114.9971758!4m3!3m2!1d32.5673136!2d-114.9958171!4m3!3m2!1d32.566692599999996!2d-114.9953716!4m3!3m2!1d32.5661266!2d-114.9949652!4m3!3m2!1d32.564562699999996!2d-114.9938165!4m3!3m2!1d32.5652776!2d-114.994382!4m5!1s0x80d7ab56caac1bcb%3A0x6beaf3e36ffd0dbe!2sPunto%20Fit%20Gym%2C%20Av%20mexico%20s%2Fn%2C%20Pob%2C%20Benito%20Ju%C3%A1rez%2C%2021900%20Benito%20Ju%C3%A1rez%2C%20B.C.!3m2!1d32.563155099999996!2d-114.9945485!5e1!3m2!1ses!2smx!4v1790122956480!5m2!1ses!2smx"                  
-              className="w-full h-full border-0 absolute inset-0 z-10" 
-              allowFullScreen={false} 
-              loading="lazy" 
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
-            
-            <div className="absolute inset-0 shadow-[inset_0_0_20px_rgba(26,15,13,0.8)] pointer-events-none z-20"></div>
-          </div>
           </div>
         </div>
       )}
 
+      {/* ==========================================
+          RESTO DE LA PÁGINA (BACKGROUND & HEADER)
+          ========================================== */}
       <div className="absolute top-6 left-4 md:top-8 md:left-8 z-50">
         <img 
           src="/logo.png" 
@@ -241,6 +241,7 @@ export default function CarreraMasterform() {
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-40 pb-12 lg:py-24 grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
         
+        {/* COLUMNA IZQUIERDA */}
         <div className="space-y-8 mt-4 lg:mt-0">
           <div>
             <div className="flex items-center gap-4">
@@ -263,7 +264,7 @@ export default function CarreraMasterform() {
                 <div 
                   key={ev.id} 
                   onClick={() => setShowWelcome(true)} 
-                  className="group flex items-center justify-between p-3 md:p-4 bg-[#DFCAAA] border-2 border-[#3E2723] rounded-none hover:bg-[#3E2723] hover:text-[#EAD7B8] transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(62,39,35,1)] cursor-pointer" // <-- AQUI SE AGREGO CURSOR-POINTER
+                  className="group flex items-center justify-between p-3 md:p-4 bg-[#DFCAAA] border-2 border-[#3E2723] rounded-none hover:bg-[#3E2723] hover:text-[#EAD7B8] transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(62,39,35,1)] cursor-pointer" 
                 >
                   <div>
                     <p className="font-black uppercase text-sm md:text-base">{ev.titulo}</p>
@@ -275,8 +276,18 @@ export default function CarreraMasterform() {
               {eventos.length === 0 && <p className="text-sm text-[#5D4037] font-bold">Cargando eventos en el condado...</p>}
             </div>
           </div>
+
+          <div className="mt-8 md:mt-12 relative h-64 sm:h-72 md:h-96 w-full bg-[#1A0F0D] border-4 border-[#3E2723] shadow-[8px_8px_0px_0px_rgba(62,39,35,1)] flex flex-col">
+            <div className="absolute top-2 left-2 md:top-4 md:left-4 z-20 bg-[#F5E8D3] text-[#3E2723] px-3 py-1 md:px-4 md:py-2 font-black uppercase tracking-widest text-[10px] md:text-xs border-2 md:border-4 border-[#3E2723] shadow-[2px_2px_0px_0px_rgba(62,39,35,1)] pointer-events-none">
+              RUTA OFICIAL - 3KM
+            </div>
+            <iframe                src="https://www.google.com/maps/embed?pb=!1m56!1m12!1m3!1d8669.407081497284!2d-115.0014890404043!3d32.567421751558854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m41!3e2!4m5!1s0x80d7ab56caac1bcb%3A0x6beaf3e36ffd0dbe!2sPunto%20Fit%20Gym%2C%20Av%20mexico%20s%2Fn%2C%20Pob%2C%20Benito%20Ju%C3%A1rez%2C%2021900%20Benito%20Ju%C3%A1rez%2C%20B.C.!3m2!1d32.563155099999996!2d-114.9945485!4m3!3m2!1d32.5697846!2d-114.9990775!4m3!3m2!1d32.5691708!2d-114.9971758!4m3!3m2!1d32.5673136!2d-114.9958171!4m3!3m2!1d32.566692599999996!2d-114.9953716!4m3!3m2!1d32.5661266!2d-114.9949652!4m3!3m2!1d32.564562699999996!2d-114.9938165!4m3!3m2!1d32.5652776!2d-114.994382!4m5!1s0x80d7ab56caac1bcb%3A0x6beaf3e36ffd0dbe!2sPunto%20Fit%20Gym%2C%20Av%20mexico%20s%2Fn%2C%20Pob%2C%20Benito%20Ju%C3%A1rez%2C%2021900%20Benito%20Ju%C3%A1rez%2C%20B.C.!3m2!1d32.563155099999996!2d-114.9945485!5e1!3m2!1ses!2smx!4v1790122956480!5m2!1ses!2smx"                                 className="w-full h-full border-0 absolute inset-0 z-10"                allowFullScreen={false}                loading="lazy"                referrerPolicy="no-referrer-when-downgrade"             ></iframe>
+            <div className="absolute inset-0 shadow-[inset_0_0_20px_rgba(26,15,13,0.6)] pointer-events-none z-10"></div>
+          </div>
+
         </div>
 
+        {/* COLUMNA DERECHA: PANELES DINÁMICOS */}
         <div className="bg-[#F5E8D3] text-[#3E2723] p-6 sm:p-10 lg:p-14 shadow-[8px_8px_0px_0px_rgba(62,39,35,1)] md:shadow-[16px_16px_0px_0px_rgba(62,39,35,1)] border-4 border-[#3E2723] w-[95%] md:w-full max-w-lg mx-auto lg:max-w-none relative">
           
           <div className="absolute top-2 left-2 w-3 h-3 border-t-4 border-l-4 border-[#8B4513]"></div>
@@ -284,6 +295,7 @@ export default function CarreraMasterform() {
           <div className="absolute bottom-2 left-2 w-3 h-3 border-b-4 border-l-4 border-[#8B4513]"></div>
           <div className="absolute bottom-2 right-2 w-3 h-3 border-b-4 border-r-4 border-[#8B4513]"></div>
 
+          {/* PANEL 1: BUSCADOR PARA CORREGIR */}
           {viewMode === 'search_correct' && (
             <div className="animate-fade-in relative z-10">
               <h3 className="text-2xl md:text-4xl font-black uppercase tracking-widest text-center mb-2">Corregir Datos</h3>
@@ -314,14 +326,33 @@ export default function CarreraMasterform() {
                     {isSubmitting ? 'Rastreando...' : 'Buscar Ficha'}
                   </button>
                   <button type="button" onClick={() => setViewMode('register')} className="w-full bg-[#DFCAAA] text-[#3E2723] py-3 md:py-4 font-black uppercase hover:bg-[#C7A985] transition-colors text-xs md:text-sm border-2 border-[#3E2723]">
-                    ← Volver al registro
+                    ← Volver al inicio
                   </button>
                 </div>
               </form>
             </div>
           )}
 
-          {(viewMode === 'register' || viewMode === 'correcting') && (
+          {/* PANEL 2: MENSAJE DE INSCRIPCIONES CERRADAS */}
+          {viewMode === 'register' && !INSCRIPCIONES_ABIERTAS && (
+            <div className="animate-fade-in relative z-10 text-center py-10">
+              <h3 className="text-3xl md:text-4xl font-black uppercase tracking-widest text-center mb-4 text-[#3E2723]" style={{ textShadow: '2px 2px 0px #C7A985' }}>
+                Registros Cerrados
+              </h3>
+              <p className="text-sm md:text-base text-[#5D4037] mb-8 font-bold text-center border-y-2 border-[#3E2723]/20 py-4">
+                El periodo de inscripción para este evento ha finalizado. ¡Gracias a todos los vaqueros registrados!
+              </p>
+              
+              <div className="mt-8 text-center pt-6">
+                <button onClick={() => setViewMode('search_correct')} className="text-xs md:text-sm font-bold text-[#8B4513] uppercase tracking-widest hover:text-[#3E2723] transition-colors underline decoration-2 underline-offset-4">
+                  ¿Ya te registraste y necesitas corregir tus datos?
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* PANEL 3: FORMULARIO DE REGISTRO / EDICIÓN */}
+          {((viewMode === 'register' && INSCRIPCIONES_ABIERTAS) || viewMode === 'correcting') && (
             <div className="animate-fade-in relative z-10">
               <h3 className="text-3xl md:text-4xl font-black uppercase tracking-widest text-center mb-2">
                 {viewMode === 'correcting' ? 'Actualizar Ficha' : 'Registro de Atleta'}
