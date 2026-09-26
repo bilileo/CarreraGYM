@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '../../../src/lib/supabase';
+import Dorsal from '../../../src/components/Dorsal'; // <-- IMPORTAMOS LA NUEVA PLANTILLA
 
 export default function AdminDashboard() {
   // =========================================
@@ -261,37 +262,12 @@ export default function AdminDashboard() {
         }
       `}} />
 
-      {/* VISTA DE IMPRESIÓN */}
+      {/* VISTA DE IMPRESIÓN (AHORA USA EL COMPONENTE DORSAL.TSX) */}
       {corredorAImprimir && (
-        <div id="print-section" className="hidden flex-col items-center justify-center w-[100vw] h-[100vh] bg-white p-6 md:p-8 font-serif">
-          <div className="w-full h-full max-w-5xl bg-white flex flex-col relative overflow-hidden border-[16px] border-white shadow-[0_0_0_4px_#3E2723]">
-            <div className="absolute top-3 left-3 w-6 h-6 border-t-8 border-l-8 border-[#8B4513]"></div>
-            <div className="absolute top-3 right-3 w-6 h-6 border-t-8 border-r-8 border-[#8B4513]"></div>
-            <div className="flex justify-between items-start pt-10 px-10 pb-4 border-b-8 border-[#3E2723] bg-white z-10">
-              <div className="border-2 border-[#DFCAAA] bg-[#F5E8D3]/30 p-2">
-                <img src="/logo.png" alt="Logo" className="h-20 object-contain drop-shadow-md" />
-              </div>
-              <div className="text-right text-[#3E2723]">
-                <h2 className="text-5xl font-black uppercase leading-none tracking-tighter border-b-4 border-[#3E2723] pb-2">COWBOY</h2>
-                <h2 className="text-5xl font-black uppercase leading-none tracking-tighter pt-2 border-b-4 border-[#3E2723] pb-1">RUN</h2>
-              </div>
-            </div>
-            <div className="flex-grow flex flex-col items-center justify-center bg-white z-10">
-              <p className="text-xl font-black uppercase tracking-[0.4em] text-[#8B4513] mb-4">Tu Número de Atleta</p>
-              <span className="text-[200px] font-black tracking-tighter leading-none text-[#3E2723]" style={{ textShadow: '6px 6px 0px #DFCAAA' }}>
-                {getDisplayId(corredorAImprimir.id)}
-              </span>
-            </div>
-            <div className="bg-[#3E2723] text-[#EAD7B8] px-10 py-8 flex justify-between items-end border-t-8 border-[#3E2723] z-10">
-              <div className="max-w-[60%]">
-                <p className="text-sm font-bold text-[#C7A985] uppercase tracking-[0.2em] mb-2">Nombre del Corredor</p>
-                <p className="text-4xl font-black uppercase truncate text-white">{corredorAImprimir.nombre}</p>
-              </div>
-              <div className="text-right">
-                <p className="text-sm font-bold text-[#C7A985] uppercase tracking-[0.2em] mb-2">Categoría Asignada</p>
-                <p className="text-4xl font-black uppercase text-white">{corredorAImprimir.categoria}</p>
-              </div>
-            </div>
+        <div id="print-section" className="hidden flex-col items-center justify-center w-[100vw] h-[100vh] bg-white">
+          {/* Contenedor que limita el alto al de la hoja (95vh) para que mantenga la proporción 1:1 de la imagen sin desbordarse */}
+          <div className="h-[95vh] w-[95vh] max-w-full flex items-center justify-center">
+            <Dorsal atleta={corredorAImprimir} />
           </div>
         </div>
       )}
