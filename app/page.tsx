@@ -8,7 +8,7 @@ export default function CarreraMasterform() {
   const router = useRouter();
 
   // 👇 INTERRUPTOR DE REGISTROS: Cambia a "true" para abrir o "false" para cerrar
-  const INSCRIPCIONES_ABIERTAS = true;
+  const INSCRIPCIONES_ABIERTAS = false;
   
   const [formData, setFormData] = useState({ id: '', nombre: '', correo: '', categoria: '', edad: '' });
   const [eventos, setEventos] = useState<any[]>([]);
