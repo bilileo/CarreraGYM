@@ -31,7 +31,7 @@ export default function CarreraMasterform() {
 
   useEffect(() => {
     // ESTABLECE AQUÍ LA FECHA Y HORA EXACTA DE LA CARRERA
-    const targetDate = new Date('2026-10-24T08:00:00').getTime();
+    const targetDate = new Date('2026-10-10T08:00:00').getTime();
 
     const interval = setInterval(() => {
       const now = new Date().getTime();
