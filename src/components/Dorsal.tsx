@@ -1,5 +1,4 @@
 export default function Dorsal({ atleta }: { atleta: any }) {
-  // Formatea el ID a 3 dígitos asegurando que no haya errores si no hay ID
   const displayId = typeof atleta.id === 'number' 
     ? atleta.id.toString().padStart(3, '0') 
     : (atleta.id ? atleta.id.toString().substring(0, 4).toUpperCase() : '000');
@@ -11,44 +10,37 @@ export default function Dorsal({ atleta }: { atleta: any }) {
 return (
     <div 
       className="w-full relative overflow-hidden font-serif bg-white shadow-lg mx-auto" 
-      style={{ aspectRatio: '1 / 1', containerType: 'inline-size', maxWidth: '1080px' }}
+      style={{ aspectRatio: '1 / 1', containerType: 'inline-size' }}
     >
-      {/* IMAGEN DE FONDO */}
       <img 
         src={miImagen}
         alt="Plantilla Dorsal" 
         className="absolute inset-0 w-full h-full object-cover z-0"
       />
       
-      {/* NÚMERO GIGANTE CENTRAL */}
       <div className="absolute top-[32%] left-0 w-full h-[30%] flex justify-center items-center z-10">
-        <span 
-          className="font-black leading-none text-[#2A1E17]" 
-          style={{ fontSize: '28cqw', letterSpacing: '-0.02em' }}
-        >
+        <span className="font-black leading-none text-[#2A1E17]" style={{ fontSize: '28cqw', letterSpacing: '-0.02em' }}>
           {displayId}
         </span>
       </div>
 
-      {/* ================= DATOS DEL CORREDOR ================= */}
-      
-      {/* FILA 1: NOMBRE (Se subió a 77% y se acercó a los dos puntos en el 25%) */}
-      <div className="absolute top-[78%] left-[27%] w-[70%] z-10 flex items-center">
+      {/* NOMBRE */}
+      <div className="absolute top-[77.5%] left-[28%] w-[65%] z-10 flex items-center">
         <p className="text-white font-bold uppercase truncate" style={{ fontSize: '3.4cqw' }}>
           {atleta.nombre}
         </p>
       </div>
 
-      {/* FILA 2: CATEGORÍA (Se bajó a 93% y su ancho máximo es 25% para no tapar la EDAD) */}
-      <div className="absolute top-[90%] left-[28%] w-[25%] z-10 flex items-center">
+      {/* CATEGORÍA */}
+      <div className="absolute top-[89.5%] left-[28%] w-[35%] z-10 flex items-center">
         <p className="text-white font-bold uppercase truncate" style={{ fontSize: '3.4cqw' }}>
           {categoriaCorta}
         </p>
       </div>
 
-      {/* FILA 2: EDAD (Se subió a 88% ya que en tu diseño "EDAD" está más arriba que "CATEGORIA") */}
-      <div className="absolute top-[89%] left-[74%] w-[20%] z-10 flex items-center">
-        <p className="text-white font-bold uppercase truncate" style={{ fontSize: '3.8cqw' }}>
+      {/* EDAD */}
+      <div className="absolute top-[89.5%] left-[72%] w-[20%] z-10 flex items-center">
+        <p className="text-white font-bold uppercase truncate" style={{ fontSize: '3.6cqw' }}>
           {atleta.edad}
         </p>
       </div>
